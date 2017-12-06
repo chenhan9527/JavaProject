@@ -31,11 +31,9 @@ public class ProductServiceImpl {
 	}
 	
 	public int findTotalCount() {
-		System.out.println("findTotalCount Service");
 		return this.dao.finTotalCount();
 	}
 	public Page<?> findByPage(int num,int size) {
-		System.out.println("findByPage Service");
 		return this.dao.findByPage(num, size);
 	}
 	

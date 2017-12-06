@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +10,12 @@
     <link href="css/orange.css"rel="stylesheet">
     <link href="css/share.css"rel="stylesheet">
     <script src="js/jquery-1.12.3.js"></script>
-    </script><script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript">
+    	function clickcart() {
+    		alert("你还没有登陆！！");
+    	}
+</script>
 </head>
 <body>
 <!--顶部导航-->
@@ -17,25 +24,35 @@
         <img src="images/logo.jpg" style="margin-top: 7px;float: left;position: absolute">
         <div class="headr-nav">
             <ul>
-                <li><a href="index.html"><span>首页</span></a> </li>
+                <li><a href="list?pageNum=1"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
                 <li><a href="hot.html">蔬果热卖</a> </li>
                 <li><a href="produ.html">全部产品</a> </li>
                 <li><a href="consult.html">最新资讯</a></li>
                 <li><a href="touch.html">联系我们</a> </li>
-                <li class="buttn butto">联系我们 </li>
+            </ul>
             <div class="sptopfoot">
                 <div class="spbottom"  >
                 </div>
             </div>
         </div>
-        <div class="headr-right">
-            <i class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
+        <c:if test="${user==null }">
+        	<div class="headr-right" onclick="clickcart()">
+            <i id="showc" class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
+            我的购物车 ∨
+        </div>
+        </c:if>
+        <c:if test="${user!=null }">
+        	<div class="headr-right">
+            <i id="showc" class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
             <a href="showcart">我的购物车 ∨</a>
-            <div class="hr-car">
+            <c:if test="${cart==null}">
+            	<div class="hr-car">
                 <i class="iconfont"style="font-size: 40px;margin-right: 10px">&#xe633;</i>
                 您的购物车内暂时没有任何产品。
-            </div>
+            	</div>
+            </c:if>
         </div>
+        </c:if>
     </div>
 </div>
 <!--顶部导航结束-->
@@ -108,13 +125,25 @@
                     <input type="text"  value="1" class="g_itext cartBuyCount f-cartBuyCount">
                 </div>
                 <div class="f-buyCountBtn">
-                    <div  class="f-countBtn mallJian"></div>
+                	<c:if test="${user!=null }">
+                	<div  class="mallJian"></div>
+                	</c:if>
+                	<c:if test="${user==null }">
+                	<div  class="f-countBtn mallJian"></div>
+                	</c:if>
                     <div  class="f-countBtn disableMallJian"></div>
                 </div>
             </div>
             <div class="fk-pd5MallActBtns">
                 <div class="buttn">
-                    <a href="addcart?id=${p.id }">加入购物车</a>
+                <c:if test="${user!=null }">
+                	<a href="addcart?id=${p.id }">加入购物车</a>
+                </c:if>
+                <c:if test="${user==null }">
+                	<div class="buttn">
+                   		 加入购物车
+                	</div>
+                </c:if>    
                 </div>
                 <div class="buttn butto">
                     立即购买
@@ -223,98 +252,102 @@
 </div>
 <!--底部结束-->
 <!--弹框-->
-<!-- <div class="popup"> -->
-<!--     <div class="login"> -->
-<!--         <div class="del">×</div> -->
-<!--         <div class="lg-cont"> -->
-<!--             <div class="lhd"> -->
-<!--                 <ul> -->
-<!--                     <li class="active">登录</li> -->
-<!--                     <li>注册</li> -->
-<!--                 </ul> -->
-<!--                 <div class="lhdfoot"> -->
-<!--                     <div class="lhdbottom"  > -->
-<!--                     </div> -->
-<!--                 </div> -->
+<div class="popup">
+    <div class="login">
+        <div class="del">×</div>
+        <div class="lg-cont">
+            <div class="lhd">
+                <ul>
+                    <li class="active">登录</li>
+                    <li>注册</li>
+                </ul>
+                <div class="lhdfoot">
+                    <div class="lhdbottom"  >
+                    </div>
+                </div>
 
-<!--             </div> -->
-<!--             <div class="lbd"> -->
-<!--                 <div class="lbd1"style="display: block"> -->
-<!--                     <div id="memberLoginAcct" class="J_memberLoginItem memberLoginDialogItem"> -->
-<!--                         <input id="memberAcct" class="generateInput memberAcctInput" type="text" value="" placeholder="账号"> -->
-<!--                     </div> -->
-<!--                     <div id="memberLoginPwd" class="J_memberLoginItem memberLoginDialogItem itemSpace"> -->
-<!--                         <input id="memberPwd" class="generateInput memberPwdInput" type="password" placeholder="密码"}> -->
-<!--                     </div> -->
-<!--                     <div class="loginButton loginButton"> -->
-<!--                         <div class="middle">登录</div> -->
-<!--                     </div> -->
-<!--                     <div class="bott"></div> -->
-<!--                 </div> -->
-<!--                 <div class="lbd1"> -->
-<!--                     <div class="msv"> -->
-<!--                         <div class="memberSignupItem"> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <input type="text" placeholder="账号" > -->
-<!--                             </div> -->
-<!--                             <div class="itemRight">*</div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem "> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <input type="password" id="memberSignupPwd" placeholder="密码" maxlength="50"> -->
-<!--                             </div> -->
-<!--                             <div class="itemRight">*</div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem"> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <input type="password" id="memberSignupRepwd" placeholder="确认密码" maxlength="50"> -->
-<!--                             </div> -->
-<!--                             <div class="itemRight">*</div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem"> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <input id="name" name="姓名" placeholder="姓名" class="userAddItem isCheckUAI" type="text" maxlength="50"> -->
-<!--                             </div> -->
-<!--                             <div class="itemRight">*</div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem"> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <input id="email" name="邮箱" placeholder="邮箱" class="userAddItem" type="text" maxlength="50"> -->
-<!--                             </div> -->
-<!--                             <div class="itemRight"></div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem"> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <input id="phone" name="电话" placeholder="电话" class="userAddItem" type="text" maxlength="50"> -->
-<!--                             </div> -->
-<!--                             <div class="itemRight"></div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem_remark"> -->
-<!--                             <div class="itemMiddle"> -->
-<!--                                 <textarea id="memberSignupRemark" placeholder="留言" maxlength="200"></textarea> -->
-<!--                             </div> -->
-<!--                             <div class="itemRight"></div> -->
-<!--                         </div> -->
-<!--                         <div class="memberSignupItem_captcha"> -->
-<!--                             <div class="itemMiddle" style="float:left;width: 150px;"> -->
-<!--                                 <input id="memberSignupCaptcha" type="text" maxlength="4" placeholder="验证码"> -->
-<!--                             </div> -->
-<!--                             <div class="itemRightp"> -->
-<!--                                 <img alt="" id="memberSignupCaptchaImg" class="memberSignupCaptchaImg" onclick="Site.changeCaptchaImg(this)" title="看不清，换一张" src="images/validateCode.jpg"> -->
-<!--                             </div> -->
-<!--                         </div> -->
-<!--                    </div> -->
-<!--                     <div class="loginButton loginButton"> -->
-<!--                         <div class="middle">注册</div> -->
-<!--                     </div> -->
-<!--                     <div class="bott"></div> -->
-<!--                 </div> -->
-<!--             </div> -->
+            </div>
+            <div class="lbd">
+            	<form action="${ctx }/login" method="post">
+            		<div class="lbd1"style="display: block">
+                    <div id="memberLoginAcct" class="J_memberLoginItem memberLoginDialogItem">
+                        <input name="id" id="memberAcct" class="generateInput memberAcctInput" type="text" value="" placeholder="账号">
+                    </div>
+                    <div id="memberLoginPwd" class="J_memberLoginItem memberLoginDialogItem itemSpace">
+                        <input name="password" id="memberPwd" class="generateInput memberPwdInput" type="password" placeholder="密码" />
+                    </div>
+                    <div>
+                        <div><input class="middle loginButton" type="submit" value="登陆" /></div>
+                    </div>
+                    <div class="bott"></div>
+                </div>
+            	</form>
+                <form action="${ctx }/regist" method="post"><div class="lbd1">
+                    <div class="msv">
+                        <div class="memberSignupItem">
+                            <div class="itemMiddle">
+                                <input id="checkis" name="id" type="text" placeholder="账号" onblur="check()">
+                            </div>
+                            <div class="itemRight"><text id="checkiss" >*</text></div>
+                        </div>
+                        <div class="memberSignupItem ">
+                            <div class="itemMiddle">
+                                <input name="password" type="password" id="memberSignupPwd" placeholder="密码" maxlength="50">
+                            </div>
+                            <div class="itemRight">*</div>
+                        </div>
+                        <div class="memberSignupItem">
+                            <div class="itemMiddle">
+                                <input type="password" id="memberSignupRepwd" placeholder="确认密码" maxlength="50">
+                            </div>
+                            <div class="itemRight">*</div>
+                        </div>
+                        <div class="memberSignupItem">
+                            <div class="itemMiddle">
+                                <input id="name" name="name" placeholder="姓名" class="userAddItem isCheckUAI" type="text" maxlength="50">
+                            </div>
+                            <div class="itemRight">*</div>
+                        </div>
+                        <div class="memberSignupItem">
+                            <div class="itemMiddle">
+                                <input id="email" name="email" placeholder="邮箱" class="userAddItem" type="text" maxlength="50">
+                            </div>
+                            <div class="itemRight"></div>
+                        </div>
+                        <div class="memberSignupItem">
+                            <div class="itemMiddle">
+                                <input id="phone" name="tel" placeholder="电话" class="userAddItem" type="text" maxlength="50">
+                            </div>
+                            <div class="itemRight"></div>
+                        </div>
+                        <div class="memberSignupItem_remark">
+                            <div class="itemMiddle">
+                                <textarea id="memberSignupRemark" placeholder="留言" maxlength="200"></textarea>
+                            </div>
+                            <div class="itemRight"></div>
+                        </div>
+                        <div class="memberSignupItem_captcha">
+                            <div class="itemMiddle" style="float:left;width: 150px;">
+                                <input id="memberSignupCaptcha" type="text" maxlength="4" placeholder="验证码">
+                            </div>
+                            <div class="itemRightp">
+                                <img alt="" id="memberSignupCaptchaImg" class="memberSignupCaptchaImg" onclick="Site.changeCaptchaImg(this)" title="看不清，换一张" src="images/validateCode.jpg">
+                            </div>
+                        </div>
+                   </div>
+                    <div>
+                        <div><input class="middle loginButton" type="submit" value="注册" /></div>
+                    </div>
+                    <div class="bott"></div>
+                </div>
+                </form>
+                
+            </div>
 
-<!--         </div> -->
-<!--     </div> -->
-<!-- </div> -->
-<!-- <!--弹框结束--> -->
+        </div>
+    </div>
+</div>
+<!--弹框结束-->
 </body>
 <script src="js/orange.js"></script>
 </html>

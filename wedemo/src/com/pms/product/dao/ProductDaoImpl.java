@@ -9,8 +9,10 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import com.pms.entity.Order;
 import com.pms.entity.Page;
 import com.pms.entity.Product;
+import com.pms.entity.User;
 
 import service.Cart;
 
@@ -19,7 +21,10 @@ public class ProductDaoImpl {
 
 	@Resource
 	private SessionFactory sessionFactory;
-	
+	public Order findOrderUser(String id) {
+		Order order = this.sessionFactory.getCurrentSession().get(Order.class, id);
+		return order;
+	}
 	public void createCar(int id,HttpSession session){
 		Product p =this.find(id);
 		Cart c = (Cart) session.getAttribute("cart");
@@ -27,6 +32,19 @@ public class ProductDaoImpl {
 			c = new Cart();
 		}
 		c.addCart(p);
+		User u = (User) session.getAttribute("user");
+		Order order = new Order();
+		if(findOrderUser("123") != null) {
+			order.setCount(order.getCount()+1);
+		}else {
+			order.setCount(1);
+			order.setPrice(c.shopcart.get(id).getTotalPrice());
+			order.setName(c.shopcart.get(id).getP().getName());
+			order.setUser(u);
+		}
+		
+		this.sessionFactory.getCurrentSession().save(order);
+		this.sessionFactory.getCurrentSession().flush();
 		session.setAttribute("cart", c);
 		session.setAttribute("p", p);
 	}
@@ -45,7 +63,6 @@ public class ProductDaoImpl {
 		return p;
 	}
 	public int finTotalCount() {
-		System.out.println("findTotaCount Dao");
 		String hql = "select count(*)  from Product";
 	    int count = ((Long) this.sessionFactory.getCurrentSession().createQuery(hql).iterate().next()).intValue();
 	    return count;

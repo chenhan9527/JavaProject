@@ -10,7 +10,23 @@
     <link href="css/index.css"rel="stylesheet">
     <link href="css/share.css"rel="stylesheet">
     <script src="js/jquery-1.12.3.js"></script>
-    </script><script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>
+    <script type="text/javascript">
+    	function clickcart() {
+    		alert("你还没有登陆！！");
+    	}
+		function check() {
+			var user=$("#checkis").val();
+  			$.ajax({
+   			type:"GET",
+   			url:"check",
+   			data:{id:user},
+   			success:function(msg){
+   				$('#checkiss').html(msg);
+   			}
+   		});
+		}
+</script>
 </head>
 <body>
 <!--顶部导航-->
@@ -25,36 +41,41 @@
                 <li><a href="consult.html">最新资讯</a></li>
                 <li><a href="touch.html">联系我们</a> </li>
                 <c:if test="${user.name!=null }" >
-                	<li><a href="#" >[${user.name }],</a><a>退出</</a></li>
+                	<li><a href="#" >[${user.name }],</a><a>退出</a></li>
                 </c:if>
                 <c:if test="${user.name==null }" >
-                	<div class="buttn fk-pd5MallActBtns" style="border-color: white;margin-top: 27px;" onmouseover="this.style.cursor='hand' " >
+                	<div id="deng" class="buttn fk-pd5MallActBtns" style="border-color: white;margin-top: 27px;" onmouseover="this.style.cursor='hand' " >
                    [登陆] 
             	</div>
             	<div class="f-buyCountBtn">
                     <div  class="f-countBtn mallJian"></div>
                     <div  class="f-countBtn disableMallJian"></div>
                 </div>
-                <div class="sptopfoot">
-                <div class="spbottom"  >
-                </div>
                 </c:if>
-                    
-                
             </ul>
             <div class="sptopfoot">
                 <div class="spbottom"  >
                 </div>
             </div>
         </div>
-        <div class="headr-right">
-            <i class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
+        <c:if test="${user==null }">
+        	<div class="headr-right" onclick="clickcart()">
+            <i id="showc" class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
             我的购物车 ∨
-            <div class="hr-car">
+        </div>
+        </c:if>
+        <c:if test="${user!=null }">
+        	<div class="headr-right">
+            <i id="showc" class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
+            我的购物车 ∨
+            <c:if test="${cart==null&&user!=null }">
+            	<div class="hr-car">
                 <i class="iconfont"style="font-size: 40px;margin-right: 10px">&#xe633;</i>
                 您的购物车内暂时没有任何产品。
-            </div>
+            	</div>
+            </c:if>
         </div>
+        </c:if>
     </div>
 </div>
 
@@ -379,7 +400,7 @@
                         <input name="id" id="memberAcct" class="generateInput memberAcctInput" type="text" value="" placeholder="账号">
                     </div>
                     <div id="memberLoginPwd" class="J_memberLoginItem memberLoginDialogItem itemSpace">
-                        <input name="password" id="memberPwd" class="generateInput memberPwdInput" type="password" placeholder="密码"}>
+                        <input name="password" id="memberPwd" class="generateInput memberPwdInput" type="password" placeholder="密码" />
                     </div>
                     <div>
                         <div><input class="middle loginButton" type="submit" value="登陆" /></div>
@@ -391,9 +412,9 @@
                     <div class="msv">
                         <div class="memberSignupItem">
                             <div class="itemMiddle">
-                                <input name="id" type="text" placeholder="账号" >
+                                <input id="checkis" name="id" type="text" placeholder="账号" onblur="check()">
                             </div>
-                            <div class="itemRight">*</div>
+                            <div class="itemRight"><text id="checkiss" >*</text></div>
                         </div>
                         <div class="memberSignupItem ">
                             <div class="itemMiddle">

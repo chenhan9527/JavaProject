@@ -16,7 +16,6 @@ public class UserDaoImpl {
 	private SessionFactory sessionFactory;
 	
 	public void add(User u) {
-		
 		this.sessionFactory.getCurrentSession().save(u);
 		this.sessionFactory.getCurrentSession().flush();
 	}
@@ -24,6 +23,10 @@ public class UserDaoImpl {
 	public User findUser(String idNum) {
 		try{
 			Query query=this.sessionFactory.getCurrentSession().createQuery("from User u where u.id="+idNum);
+//			Order order = new Order();
+//			order.setCount(5);
+//			this.sessionFactory.getCurrentSession().save(order);
+//			this.sessionFactory.getCurrentSession().flush();
 			return (User) query.uniqueResult();
 		}catch(Exception e){
 			e.printStackTrace();
