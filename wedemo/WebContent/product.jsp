@@ -24,7 +24,7 @@
         <img src="images/logo.jpg" style="margin-top: 7px;float: left;position: absolute">
         <div class="headr-nav">
             <ul>
-                <li><a href="list?pageNum=1"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
+                <li><a href="list?pageNum=1&controtype=Product"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
                 <li><a href="hot.html">蔬果热卖</a> </li>
                 <li><a href="produ.html">全部产品</a> </li>
                 <li><a href="consult.html">最新资讯</a></li>
@@ -62,11 +62,16 @@
 </div>
 <!--banner图片结束-->
 <!--主页内容-->
-<div class="content">
+<div class="content"  id="myself">
     <div class="cont-top">
         <div class="cont-left">
             <div class="ctl-img">
-                <img src="images/${p.name }.jpg">
+                <c:if test="${p.id<7 }">
+                    		<img src="images/${p.name}.jpg" width="100%">
+                    	</c:if>
+                        <c:if test="${p.id>6 }">
+                    		<img src="images/org.jpg" width="100%">
+                    	</c:if>
             </div>
             <div class="collect">
                 <div class="coll">

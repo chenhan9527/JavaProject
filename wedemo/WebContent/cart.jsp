@@ -17,7 +17,7 @@
         <img src="images/logo.jpg" style="margin-top: 7px;float: left;position: absolute">
         <div class="headr-nav">
             <ul>
-                <li><a href="list?pageNum=1"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
+                <li><a href="list?pageNum=1&controtype=Product"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
                 <li><a href="hot.html"style="color: #4AB344"><span style="color: #4AB344">蔬果热卖</span></a> </li>
                 <li><a href="produ.html">全部产品</a> </li>
                 <li><a href="consult.html">最新资讯</a></li>
@@ -42,7 +42,7 @@
         <div class="rec-cont clear">
             <div class="rec-left">
                 <div class="classily">
-                    <div class="cltop">
+                    <div class="cltop" id="myself">
                         <p>产品分类</p>
                     </div>
                     <div class="cltcon">
@@ -100,10 +100,9 @@
                                         </span>
                                     <span class="second_Marketprice">￥0.00</span>
                                 </div>
-                                <div class="buy">
-                                    <a class="second_mallBuy">
-                                        <span style="color: white;">数量：     ${my.value.count }</span>
-                                    </a>
+                                <div style="margin-top: 25px;">
+                                    <span style="margin-left: 8px;">数量：      ${my.value.count }</span>
+                                    <span style="margin-left: 100px;"><a href="deletecp?id=${my.value.p.id }">删除</a></span>
                                 </div>
                             </div>
                         </div>
@@ -112,13 +111,11 @@
                         
                     </div>
                 </div>
-                <div class="hd">
-                    <div class="net">上一页</div>
+                <div style="float: right; margin-top: 15px;">
                     <ul>
-                        <li><a href="#" class="active">1</a></li>
-                        <li><a href="#">2</a></li>
+                    	<span style="margin-left: 100px;"><a href="deleteallcp">删除购物车</a></span>
+                        <span style="margin-left: 100px;"><a href="orders">提交此订单</a></span>
                     </ul>
-                    <div class="next"> 下一页</div>
 
                 </div>
             </div>

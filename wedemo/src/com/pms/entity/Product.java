@@ -13,6 +13,13 @@ public class Product {
 	private String name;
 	private String description;
 	private int price;
+	private int typeid;
+	public int getTypeid() {
+		return typeid;
+	}
+	public void setTypeid(int typeid) {
+		this.typeid = typeid;
+	}
 	public int getId() {
 		return id;
 	}

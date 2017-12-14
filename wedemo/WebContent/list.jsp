@@ -15,16 +15,28 @@
     	function clickcart() {
     		alert("你还没有登陆！！");
     	}
-		function check() {
+		function checkUser() {
 			var user=$("#checkis").val();
   			$.ajax({
-   			type:"GET",
-   			url:"check",
-   			data:{id:user},
-   			success:function(msg){
-   				$('#checkiss').html(msg);
-   			}
-   		});
+   				type:"GET",
+   				url:"checkuser",
+   				data:{id:user},
+   				success:function(msg){
+   					$('#checkiss').html(msg);
+   				}
+   			});
+		}
+		function checkPassword() {
+			var password1=$("#memberSignupPwd").val();
+			var password2=$("#memberSignupRepwd").val();
+  			$.ajax({
+   				type:"GET",
+   				url:"checkpassword",
+   				data:{num1:password1,num2:password2},
+   				success:function(msg){
+   					$('#checkMemberSignupRepwd').html(msg);
+   				}
+   			});
 		}
 </script>
 </head>
@@ -35,13 +47,13 @@
         <img src="images/logo.jpg" style="margin-top: 7px;float: left;position: absolute">
         <div class="headr-nav">
             <ul>
-                <li><a href="list?pageNum=1"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
+                <li><a href="list?pageNum=1&controtype=Product"style="color: #4AB344"><span style="color: #4AB344">首页</span></a> </li>
                 <li><a href="hot.html">蔬果热卖</a> </li>
                 <li><a href="produ.html">全部产品</a> </li>
                 <li><a href="consult.html">最新资讯</a></li>
                 <li><a href="touch.html">联系我们</a> </li>
                 <c:if test="${user.name!=null }" >
-                	<li><a href="#" >[${user.name }],</a><a>退出</a></li>
+                	<li style="width='500px'"><a href="toaddress" >[${user.name }],</a><a href="exituser">退出</a></li>
                 </c:if>
                 <c:if test="${user.name==null }" >
                 	<div id="deng" class="buttn fk-pd5MallActBtns" style="border-color: white;margin-top: 27px;" onmouseover="this.style.cursor='hand' " >
@@ -67,7 +79,7 @@
         <c:if test="${user!=null }">
         	<div class="headr-right">
             <i id="showc" class="iconfont" style="font-size: 16px;margin-right: 10px">&#xe7d5;</i>
-            我的购物车 ∨
+            <a href="showcart">我的购物车 ∨</a>
             <c:if test="${cart==null&&user!=null }">
             	<div class="hr-car">
                 <i class="iconfont"style="font-size: 40px;margin-right: 10px">&#xe633;</i>
@@ -109,10 +121,15 @@
             </div>
 
             <div class="rec-right">
-				<c:forEach items="${page.list }" var="p">
+				<c:forEach items="${productpage.list }" var="p">
                 <div class="rcr">
                     <div class="rcr-top">
-                        <img src="images/${p.name}.jpg" width="100%">
+                    	<c:if test="${p.id<7 }">
+                    		<img src="images/${p.name}.jpg" width="100%">
+                    	</c:if>
+                        <c:if test="${p.id>6 }">
+                    		<img src="images/org.jpg" width="100%">
+                    	</c:if>
                     </div>
                     <div class="rcr-bot">
                         <div class="rb-top">
@@ -140,11 +157,11 @@
            		<div style="float: left;width:880px;float: left;text-align: center;
            		height: 42px;margin-left: 32%;margin-bottom: 55px;" >  
                 	<div style="line-height: 42px;padding: 0 15px;float: left;
-                	width: 80px;margin-left: -3%;"><a href="list?pageNum=${page.prePageNum }">
+                	width: 80px;margin-left: -3%;"><a href="list?pageNum=${productpage.prePageNum }&controtype=Product">
                 	上一页
                 	</a></div> 
                 	<div style="width: 80px;line-height: 42px;padding: 0 15px;
-                	float: right; margin-right: 58%;mar"> <a href="list?pageNum=${page.nePageNum }">
+                	float: right; margin-right: 58%;mar"> <a href="list?pageNum=${productpage.nePageNum }&controtype=Product">
                 	下一页
                 	</a></div> 
             	</div>
@@ -412,7 +429,7 @@
                     <div class="msv">
                         <div class="memberSignupItem">
                             <div class="itemMiddle">
-                                <input id="checkis" name="id" type="text" placeholder="账号" onblur="check()">
+                                <input id="checkis" name="id" type="text" placeholder="账号" onblur="checkUser()">
                             </div>
                             <div class="itemRight"><text id="checkiss" >*</text></div>
                         </div>
@@ -424,9 +441,9 @@
                         </div>
                         <div class="memberSignupItem">
                             <div class="itemMiddle">
-                                <input type="password" id="memberSignupRepwd" placeholder="确认密码" maxlength="50">
+                                <input type="password" id="memberSignupRepwd" placeholder="确认密码" maxlength="50" onblur="checkPassword()">
                             </div>
-                            <div class="itemRight">*</div>
+                            <div class="itemRight" id="checkMemberSignupRepwd">*</div>
                         </div>
                         <div class="memberSignupItem">
                             <div class="itemMiddle">

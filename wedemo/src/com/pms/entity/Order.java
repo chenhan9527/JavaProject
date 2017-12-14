@@ -19,8 +19,21 @@ public class Order {
     private String name;
     private int count;
     private User user;
-    
-    @Id
+    private int orderstate;
+    private String useraddress;
+    public String getUseraddress() {
+		return useraddress;
+	}
+	public void setUseraddress(String useraddress) {
+		this.useraddress = useraddress;
+	}
+	public int getOrderstate() {
+		return orderstate;
+	}
+	public void setOrderstate(int orderstate) {
+		this.orderstate = orderstate;
+	}
+	@Id
     @GeneratedValue(generator="my_gen")
     @GenericGenerator(name = "my_gen", strategy = "increment")
     public Integer getId() {

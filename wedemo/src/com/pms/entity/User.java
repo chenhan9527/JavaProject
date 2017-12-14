@@ -18,8 +18,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
-
-
 @Entity
 @Table(name="user")
 public class User {
@@ -31,7 +29,18 @@ public class User {
 	private String email;
 	private String tel;
 	private Set orderSet = new HashSet<Order>();
+	private Set addressSet = new HashSet<Address>();
 	
+	@OneToMany(mappedBy="user", targetEntity=Address.class, 
+            cascade=CascadeType.ALL)
+	public Set getAddressSet() {
+		return addressSet;
+	}
+
+	public void setAddressSet(Set addressSet) {
+		this.addressSet = addressSet;
+	}
+
 	@OneToMany(mappedBy="user", targetEntity=Order.class, 
             cascade=CascadeType.ALL)
     public Set getOrderSet() {

@@ -18,8 +18,26 @@ public class ProductServiceImpl {
 	@Resource
 	private ProductDaoImpl dao;
 	
+	public void save(Product p) {
+		this.dao.saveProduct(p);
+	}
+	public List findTypeId() {
+		return this.dao.findProductType();
+	}
+	public void deleteAllCp(HttpSession session) {
+		this.dao.deleteAllCp(session);
+	}
+	public void deletecp(int id, HttpSession session) {
+		this.dao.deletecp(id, session);
+	}
 	public void createCar(int id,HttpSession session){
 		this.dao.createCar(id, session);
+	}
+	public void updateProduct(Product p) {
+		this.dao.updateProduct(p);
+	}
+	public void deleteProduct(int id) {
+		this.dao.deleteProduct(id);
 	}
 	public Product find(int id) {
 		Product p = this.dao.find(id);
@@ -29,12 +47,17 @@ public class ProductServiceImpl {
 			return null;
 		}
 	}
-	
-	public int findTotalCount() {
-		return this.dao.finTotalCount();
+	public Product findByName(String name) {
+		return this.dao.findByName(name);
 	}
-	public Page<?> findByPage(int num,int size) {
-		return this.dao.findByPage(num, size);
+	public Page<?> findByPage(int num,int size,String controtype) {
+		return this.dao.findByPage(num, size,controtype);
+	}
+//	public Page<?> findOrderByPage(String id,int num,int size,String controtype) {
+//		return this.dao.findOrderByPage(id, num, size,controtype);
+//	}
+	public Page findOrderByPage(String id, int num, int size, String controtype) {
+		return this.dao.findOrderByPage(id, num, size, controtype);
 	}
 	
 	public List<Product> listProducts(){
